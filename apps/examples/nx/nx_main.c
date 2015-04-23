@@ -700,7 +700,7 @@ int nx_main(int argc, char *argv[])
    */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 
   /* Set the position of window #1 */
 
@@ -749,7 +749,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 
   /* Set the size of the window 2 == size of window 1*/
 
@@ -763,7 +763,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 
   /* Set the position of window #2 */
 
@@ -780,7 +780,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 
 #ifndef CONFIG_EXAMPLES_NX_RAWWINDOWS
   printf("nx_main: Add toolbar to window #2\n");
@@ -793,7 +793,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 #endif
 
   /* Give keyboard input to the top window -- should be window #2 */
@@ -810,7 +810,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 #endif
 
   /* Lower window 2 */
@@ -825,7 +825,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 
   /* Put mouse left-button clicks all over the screen and see who responds */
 
@@ -852,7 +852,7 @@ int nx_main(int argc, char *argv[])
   /* Sleep a bit */
 
   printf("nx_main: Sleeping\n\n");
-  sleep(1);
+  sleep(5);
 #endif
 
   /* Raise window 2 */

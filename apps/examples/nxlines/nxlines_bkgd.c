@@ -166,7 +166,7 @@ static void nxlines_mousein(NXWINDOW hwnd, FAR const struct nxgl_point_s *pos,
 {
   printf("nxlines_mousein: hwnd=%p pos=(%d,%d) button=%02x\n",
          hwnd,  pos->x, pos->y, buttons);
-
+}
 #endif
 
 /****************************************************************************
@@ -292,7 +292,8 @@ void nxlines_test(NXWINDOW hwnd)
 
       /* Clear the previous line by overwriting it with the circle color */
 
-      color[0] = CONFIG_EXAMPLES_NXLINES_CIRCLECOLOR;
+      //color[0] = CONFIG_EXAMPLES_NXLINES_CIRCLECOLOR;
+	  color[0] = CONFIG_EXAMPLES_NXLINES_BGCOLOR; 
       ret = nx_drawline((NXWINDOW)hwnd, &previous, CONFIG_EXAMPLES_NXLINES_LINEWIDTH, color);
       if (ret < 0)
         {
@@ -330,6 +331,7 @@ void nxlines_test(NXWINDOW hwnd)
         }
 
       memcpy(&previous, &vector, sizeof(struct nxgl_vector_s));
-      usleep(500*1000);
+      //usleep(500*1000);
+	  sleep(5);
     }
 }

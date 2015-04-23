@@ -223,7 +223,7 @@ static void nximage_position(NXWINDOW hwnd, FAR const struct nxgl_size_s *size,
     }
 }
 
-/****************************************************************************
+/***************************************************************************
  * Name: nximage_mousein
  *
  * Description:
@@ -371,6 +371,7 @@ void nximage_image(NXWINDOW hwnd)
       /* Increment the vertical position */
 
       pos.y++;
+	  usleep(50 * 1000);
 
 #if defined(CONFIG_EXAMPLES_NXIMAGE_YSCALE1p5)
 

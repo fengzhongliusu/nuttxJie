@@ -194,6 +194,10 @@ ifeq ($(CONFIG_EXAMPLES_NXTEXT),y)
 CONFIGURED_APPS += examples/nxtext
 endif
 
+ifeq ($(CONFIG_EXAMPLES_NXUI),y)
+CONFIGURED_APPS += examples/nxui
+endif
+
 ifeq ($(CONFIG_EXAMPLES_OSTEST),y)
 CONFIGURED_APPS += examples/ostest
 endif
