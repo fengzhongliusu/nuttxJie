@@ -24,6 +24,8 @@
 #include <nuttx/nx/nxfonts.h>
 #include <nuttx/video/rgbcolors.h>
 
+#include <pthread.h>
+
 
 
 /* outer configuration ******************************************************/
@@ -41,7 +43,7 @@
 
 #ifndef CONFIG_EXAMPLES_NXUI_BGCOLOR
 #  if CONFIG_EXAMPLES_NXUI_BPP == 24 || CONFIG_EXAMPLES_NXUI_BPP == 32
-#    define CONFIG_EXAMPLES_NXUI_BGCOLOR RGB24_BLACK//0x007b68ee
+#    define CONFIG_EXAMPLES_NXUI_BGCOLOR 0x8ee000//0x808000//0xC4BFF6//RGB24_SILVER//0x007b68ee
 #  elif CONFIG_EXAMPLES_NXUI_BPP == 16
 #    define CONFIG_EXAMPLES_NXUI_BGCOLOR 0x7b5d
 #  elif CONFIG_EXAMPLES_NXUI_BPP < 8
@@ -171,7 +173,7 @@ struct nxui_frame_s {
 
 enum gender_e {
 	NXUI_GENDER_MALE,
-	NXUI_GENDER_FEMAL
+	NXUI_GENDER_FEMALE
 };
 
 struct time_s {
@@ -216,7 +218,15 @@ struct nxui_doctor_s {
 
 enum rect_type_e {
 	NXUI_PATIENT_NAME,
-	NXUI_PATIENT_AGE
+	NXUI_PATIENT_GENDER,
+	NXUI_PATIENT_AGE,
+	NXUI_DOCTOR_PHOTO,
+	NXUI_SPECIAL_NOTE,
+	NXUI_PATIENT_DIET,
+	NXUI_DRUG_ALLERGY,
+	NXUI_PATIENT_POSITION,
+	NXUI_CARE_LEVEL,
+	NXUI_BED_NO
 };
 
 /* 用于显示图像 */
@@ -226,9 +236,10 @@ struct nxui_imagerect_s {
 	uint8_t y_offset;									 /* 显示内容区域离矩形框左上角的y方向的偏移 */
 	nxgl_mxpixel_t bkgd_color;							 /* 矩形区域的背景色 */
 	nxgl_mxpixel_t line_color; 						     /* 矩形的边框颜色 */
-	nxgl_mxpixel_t line_width;					         /* 边框的宽度 */
+	nxgl_coord_t line_width;					         /* 边框的宽度 */
 	struct nxgl_rect_s rect;                             /* 指定矩形在屏幕上的位置 */
 	struct nxui_imagerect_s *next;                       /* 指向下一个矩形结构 */
+
 };
 
 /* 用于显示文本 */
@@ -238,21 +249,39 @@ struct nxui_textrect_s {
 	uint8_t y_offset;
 	nxgl_mxpixel_t bkgd_color;
 	nxgl_mxpixel_t line_color;
-	nxgl_mxpixel_t line_width;
+	nxgl_coord_t line_width;
 	struct nxgl_rect_s rect; 
 	struct nxui_textrect_s *next;	
 	enum nx_fontid_e font_id;
-	//uint8_t font_size;
+	uint8_t font_height;
 	nxgl_mxpixel_t font_color;
+	char *text;
+	uint16_t col_num;                                    /* 每行能够显示的文本数，如果行数为1,那么超过此值则滚动显示，否则就换行显示，如果还显示不完则每次向上滚动一行显示 */
+	uint16_t row_num;                                    /* 能够用来显示的行数 */
+	uint16_t text_index;                                  /* 指向当前要显示的文本的开始位置，每次滚动其值加1 */
+	pthread_t text_scroll_handle;                        /* 如果为NULL则不支持文本的滚动显示，否则指向滚动播放的线程 */
 };
 
+struct pix_run_s
+{
+  uint32_t npix;  /* Number of pixels */
+  uint32_t code;  /* Pixel RGB code */
+};
+
+struct nxui_rgb_s {
+	uint8_t r;
+	uint8_t g;
+	uint8_t b;
+};
 /****************************************************************************
  * Public Variables
  ****************************************************************************/
 extern struct nxui_frame_s g_frame[NXUI_FRAME_NUM];
 extern struct nxui_frame_s *g_current;
 extern struct nxui_patient_s g_patient;
-
+extern const struct pix_run_s g_nuttx[];
+extern const struct pix_run_s bitmap[];
+extern const struct nxui_rgb_s  palette[];
 /* NXHELLO state data */
 
 extern struct nxui_data_s g_nxui;
@@ -269,7 +298,9 @@ extern const struct nx_callback_s g_nxuicb;
 extern FAR NX_DRIVERTYPE *up_nxdrvinit(unsigned int devno);
 #endif
 
-void nxui_frame_init(void);
-int nxui_draw_frame(int which_frame);
+FAR void nxui_frame_init(void);
+FAR int nxui_draw_frame(int which_frame);
 
+/* Image interfaces */
+extern void nximage_blitrow(FAR nxgl_mxpixel_t *run, FAR const void **state, nxgl_coord_t image_width);
 #endif /* __APPS_EXAMPLES_NXUI_NXUI_H */

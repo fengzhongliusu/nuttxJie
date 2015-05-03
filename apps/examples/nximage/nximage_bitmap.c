@@ -185,7 +185,7 @@ static const nxgl_mxpixel_t g_lut[IMAGE_NLUTCODES] =
 
 #if CONFIG_EXAMPLES_NXIMAGE_BPP == 24
 
-static const struct pix_run_s g_nuttx[] =
+const struct pix_run_s g_nuttx[] =
 {
   { 76,   0}, {  1,   1}, {  1,   2}, {  1,   3}, {  4,   4}, {  1,   5}, { 76,   0},              /* Row 0 */
   { 75,   0}, {  1,   1}, {  1,   2}, {  1,   6}, {  1,   4}, {  2,   7}, {  3,   4}, {  1,   5},  /* Row 1 */

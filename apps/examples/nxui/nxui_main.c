@@ -103,6 +103,8 @@ const struct nx_callback_s g_nxuicb =
 
 struct nxui_patient_s g_patient;
 
+pthread_mutex_t g_patient_mutex;
+
 /****************************************************************************
  * Private Functions
  ****************************************************************************/
@@ -344,6 +346,7 @@ int nxui_main(int argc, char *argv[])
 		printf("nxui_main: nxui initialize error!\n");
 		return;
 	}
+	pthread_mutex_init(&g_patient_mutex, NULL);
 	nxui_frame_init();
 	nxui_draw_frame(0);
 }
