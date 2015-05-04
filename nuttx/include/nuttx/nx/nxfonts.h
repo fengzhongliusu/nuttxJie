@@ -130,6 +130,15 @@ enum nx_fontid_e
 {
   FONTID_DEFAULT     = 0         /* The default font */
 
+
+/* add by cshuo*/
+#ifdef CONFIG_NXFONT_CN32X32
+  , FONTID_CN32X32 = 19
+#endif 
+
+#ifdef CONFIG_NXFONT_CN48X48
+  , FONTID_CN48X48 = 20 
+#endif 
 /* Monospace fonts */
 
 #ifdef CONFIG_NXFONT_MONO5X8
@@ -240,8 +249,8 @@ struct nx_fontbitmap_s
 
 struct nx_fontset_s
 {
-  uint8_t  first;             /* First bitmap character code */
-  uint8_t  nchars;            /* Number of bitmap character codes */
+  uint16_t  first;             /* First bitmap character code */
+  uint16_t  nchars;            /* Number of bitmap character codes */
   FAR const struct nx_fontbitmap_s *bitmap;
 };
 
@@ -256,7 +265,7 @@ struct nx_font_s
 };
 
 /* Finally, this structure defines everything about the font set */
-
+//中文支持修改
 struct nx_fontpackage_s
 {
   uint8_t id;                            /* The font ID */

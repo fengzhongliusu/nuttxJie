@@ -88,6 +88,14 @@ extern const struct nx_fontpackage_s g_sans22x29_package;
 extern const struct nx_fontpackage_s g_sans28x37_package;
 #endif
 
+#ifdef CONFIG_NXFONT_CN32X32
+extern const struct nx_fontpackage_s g_cn32x32_package;
+#endif 
+
+#ifdef CONFIG_NXFONT_CN48X48
+extern const struct nx_fontpackage_s g_cn48x48_package;
+#endif 
+
 #ifdef CONFIG_NXFONT_SANS39X48
 extern const struct nx_fontpackage_s g_sans39x48_package;
 #endif
@@ -151,6 +159,14 @@ static FAR const struct nx_fontpackage_s *g_fontpackages[] =
   &g_mono5x8_package,
 #endif
 
+/* add by cshuo*/
+#ifdef CONFIG_NXFONT_CN32X32
+  &g_cn32x32_package,
+#endif 
+
+#ifdef CONFIG_NXFONT_CN48X48
+  &g_cn48x48_package,
+#endif 
 /* SANS */
 
 #ifdef CONFIG_NXFONT_SANS17X22
@@ -278,14 +294,25 @@ static inline FAR const struct nx_fontset_s *
   else
     {
       /* Someday, perhaps 16-bit fonts will go here */
-
-      gdbg("16-bit font not currently supported\n");
+		//修改以支持中文
+#if CONFIG_NXFONTS_CHARBITS >= 16 
+      /* Select the 8-bit font set */
+      fontset = &package->font8;
+#else
+      gdbg("8-bit font support disabled: %d\n", ch);
       return NULL;
+#endif
     }
 
   /* Then verify that the character actually resides in the font */
-
+  //字符code在对应font packge 范围内
+  //中文这样判断有问题(不连续),不影响结果
+#if CONFIG_NXFONTS_CHARBITS < 16
   if (ch >= fontset->first && ch < fontset->first +fontset->nchars)
+#else
+  uint16_t last_cn_code = fontset->first + (((fontset->nchars)/94-1)<<8) + 94;  //94是一个汉字方阵字数
+  if (ch >= fontset->first && ch < last_cn_code)  
+#endif
     {
       return fontset;
     }
@@ -403,6 +430,11 @@ FAR const struct nx_fontbitmap_s *nxf_getbitmap(NXHANDLE handle, uint16_t ch)
     (FAR const struct nx_fontpackage_s *)handle;
   FAR const struct nx_fontset_s     *fontset;
   FAR const struct nx_fontbitmap_s  *bm  = NULL;
+  /** add by cshuo **/
+  FAR uint8_t ch_H, ch_L,first_H,first_L;
+  FAR uint16_t first_code;
+  FAR uint16_t ch_index;
+  /** add by cshuo **/
 
   /* Verify that the handle is a font package */
 
@@ -414,8 +446,20 @@ FAR const struct nx_fontbitmap_s *nxf_getbitmap(NXHANDLE handle, uint16_t ch)
       if (fontset)
         {
           /* Then get the bitmap from the font set */
-
+		   //根据字符ascii码到font packege里找到相应的bitmap信息
+#if CONFIG_NXFONTS_CHARBITS < 8
           bm = &fontset->bitmap[ch - fontset->first];
+#else
+		  //汉字分区存储，每个区域有94个汉字,计算汉字在数组中的位置
+		  first_code = fontset->first;
+		  first_H = first_code >> 8;
+		  first_L = first_code - (first_H << 8);
+		  ch_H = ch >> 8;
+		  ch_L = ch - (ch_H << 8);
+		  ch_index = (ch_H - first_H)*94 + ch_L - first_L;
+		  bm = &fontset->bitmap[ch_index];
+#endif 
+
         }
     }
 

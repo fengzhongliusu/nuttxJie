@@ -45,7 +45,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <semaphore.h>
-#include <iconv.h>
 
 #include <nuttx/nx/nxglib.h>
 #include <nuttx/nx/nx.h>
@@ -71,7 +70,7 @@
 
 #ifndef CONFIG_EXAMPLES_NXHELLO_BGCOLOR
 #  if CONFIG_EXAMPLES_NXHELLO_BPP == 24 || CONFIG_EXAMPLES_NXHELLO_BPP == 32
-#    define CONFIG_EXAMPLES_NXHELLO_BGCOLOR 0x99ff66
+#    define CONFIG_EXAMPLES_NXHELLO_BGCOLOR 0x007b68ee
 #  elif CONFIG_EXAMPLES_NXHELLO_BPP == 16
 #    define CONFIG_EXAMPLES_NXHELLO_BGCOLOR 0x7b5d
 #  elif CONFIG_EXAMPLES_NXHELLO_BPP < 8
@@ -87,7 +86,7 @@
 
 #ifndef CONFIG_EXAMPLES_NXHELLO_FONTCOLOR
 #  if CONFIG_EXAMPLES_NXHELLO_BPP == 24 || CONFIG_EXAMPLES_NXHELLO_BPP == 32
-#    define CONFIG_EXAMPLES_NXHELLO_FONTCOLOR 0x0000CC
+#    define CONFIG_EXAMPLES_NXHELLO_FONTCOLOR 0x00000000
 #  elif CONFIG_EXAMPLES_NXHELLO_BPP == 16
 #    define CONFIG_EXAMPLES_NXHELLO_FONTCOLOR 0x0000
 #  elif CONFIG_EXAMPLES_NXHELLO_BPP < 1
@@ -143,8 +142,6 @@ struct nxhello_data_s
   NXHANDLE hnx;
   NXHANDLE hbkgd;
   NXHANDLE hfont;
-  NXHANDLE hfont2;
-  NXHANDLE hfont3;
 
   /* The screen resolution */
 
@@ -178,12 +175,6 @@ extern FAR NX_DRIVERTYPE *up_nxdrvinit(unsigned int devno);
 
 /* Background window interfaces */
 
-extern void nxhello_hello(NXWINDOW hwnd,const char* str,int sign);
-extern void d_nxhello(NXWINDOW hwnd);
-
-/* added by cshuo */
-extern int code_convert(char *from_charset,char *to_charset,char *inbuf,int inlen,char *outbuf,int outlen);
-extern int u2g(const char *inbuf,int inlen,char *outbuf,int outlen);
-/* added by cshuo */
+extern void nxhello_hello(NXWINDOW hwnd);
 
 #endif /* __APPS_EXAMPLES_NXHELLO_NXHELLO_H */
