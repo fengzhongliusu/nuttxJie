@@ -1,0 +1,190 @@
+LN: include/arch/board to configs/sim/include
+LN: include/apps to ../apps/include
+make[1]: Entering directory `/tmp/nuttxJie/apps'
+make[2]: Entering directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Nothing to be done for `context'.
+make[2]: Leaving directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Entering directory `/tmp/nuttxJie/apps/platform'
+LN: platform/board to /tmp/nuttxJie/apps/platform/dummy
+make[2]: Leaving directory `/tmp/nuttxJie/apps/platform'
+make[1]: Leaving directory `/tmp/nuttxJie/apps'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/graphics'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/graphics'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/libnx'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/libnx'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/sched'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/sched'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make[1]: Entering directory `/tmp/nuttxJie/apps'
+make[2]: Entering directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Nothing to be done for `context'.
+make[2]: Leaving directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Entering directory `/tmp/nuttxJie/apps/platform'
+LN: platform/board to /tmp/nuttxJie/apps/platform/dummy
+make[2]: Leaving directory `/tmp/nuttxJie/apps/platform'
+make[2]: Entering directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Nothing to be done for `depend'.
+make[2]: Leaving directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Entering directory `/tmp/nuttxJie/apps/platform'
+LN: platform/board to /tmp/nuttxJie/apps/platform/dummy
+make[2]: Leaving directory `/tmp/nuttxJie/apps/platform'
+make[1]: Leaving directory `/tmp/nuttxJie/apps'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/libc'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/libc'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/mm'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/mm'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/graphics'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/graphics/nxglib'
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/graphics'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/libnx'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/libnx/nxfonts'
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/libnx'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/fs'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/fs'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/drivers'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/drivers'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/binfmt'
+make[1]: Nothing to be done for `depend'.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/binfmt'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/sched'
+make[1]: `libsched.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/sched'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/libc'
+make[1]: `libc.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/libc'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/mm'
+make[1]: `libmm.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/mm'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make[1]: `libarch.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make[1]: Entering directory `/tmp/nuttxJie/apps'
+make[2]: Entering directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/apps/examples/nxhello'
+make[2]: Entering directory `/tmp/nuttxJie/apps/platform'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/tmp/nuttxJie/apps/platform'
+make[1]: Leaving directory `/tmp/nuttxJie/apps'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/fs'
+make[1]: `libfs.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/fs'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/drivers'
+make[1]: `libdrivers.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/drivers'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/binfmt'
+make[1]: `libbinfmt.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/binfmt'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/graphics'
+make[1]: `libgraphics.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/graphics'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/libnx'
+make[1]: `libnx.a' is up to date.
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/libnx'
+make[1]: Entering directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make[2]: Entering directory `/tmp/nuttxJie/nuttx/configs/sim/src'
+make[2]: `libboard.a' is up to date.
+make[2]: Leaving directory `/tmp/nuttxJie/nuttx/configs/sim/src'
+LD:  nuttx.rel
+LD:  nuttx
+nuttx.rel:(.data+0x0): undefined reference to `g_cn32x32_package'
+nuttx.rel:(.data+0x8): undefined reference to `g_cn48x48_package'
+collect2: error: ld returned 1 exit status
+make[1]: *** [nuttx] Error 1
+make[1]: Leaving directory `/tmp/nuttxJie/nuttx/arch/sim/src'
+make: *** [pass2] Error 2
