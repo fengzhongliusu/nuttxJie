@@ -346,7 +346,11 @@ int nxui_main(int argc, char *argv[])
 		printf("nxui_main: nxui initialize error!\n");
 		return;
 	}
-	pthread_mutex_init(&g_patient_mutex, NULL);
+//	pthread_mutex_init(&g_patient_mutex, NULL);
 	nxui_frame_init();
-	nxui_draw_frame(0);
+//	nxui_draw_frame(0);
+//	sleep(3);
+	nxui_draw_frame(2);
+//	sleep(3);
+//	nxui_draw_frame(0);
 }

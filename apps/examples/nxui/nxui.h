@@ -189,11 +189,11 @@ enum level_e {
 };
 
 struct nxui_patient_s {
-	char name[NXUI_NAME_LEN + 1];                        /* 姓名 */
+	unsigned char name[NXUI_NAME_LEN + 1];                        /* 姓名 */
 	enum gender_e gender;						         /* 性别 */
 	uint16_t age;								         /* 年龄 */
 	uint16_t bed_no;							         /* 床位号 */
-	struct time_s admmission_time;                       /* 入院时间 */
+	struct time_s admission_time;                       /* 入院时间 */
 	char hospitalized_no[NXUI_HOSPITALIZED_NO_LEN + 1];  /* 住院号码 */
 	char diagnosis_info[NXUI_DIAGNOSIS_INFO_LEN + 1];    /* 住院信息 */
     enum level_e care_level;							 /* 护理级别 */
@@ -226,7 +226,14 @@ enum rect_type_e {
 	NXUI_DRUG_ALLERGY,
 	NXUI_PATIENT_POSITION,
 	NXUI_CARE_LEVEL,
-	NXUI_BED_NO
+	NXUI_BED_NO,
+	NXUI_ADMISSION_TIME,
+	NXUI_HOSPITALIZED_NO,
+	NXUI_DIAGNOSIS_INFO,
+	NXUI_RESULT_QUERY,
+	NXUI_DIAGNOSIS_QUERY,
+	NXUI_DRUG_QUERY,
+	NXUI_COST_QUERY
 };
 
 /* 用于显示图像 */
@@ -234,6 +241,7 @@ struct nxui_imagerect_s {
 	enum rect_type_e rect_type;					         /* 矩形框标识，表明该矩形框的用途，例如显示病人姓名 */
 	uint8_t x_offset;									 /* 显示内容区域离矩形框左上角的x方向的偏移 */
 	uint8_t y_offset;									 /* 显示内容区域离矩形框左上角的y方向的偏移 */
+	bool no_bkgd;
 	nxgl_mxpixel_t bkgd_color;							 /* 矩形区域的背景色 */
 	nxgl_mxpixel_t line_color; 						     /* 矩形的边框颜色 */
 	nxgl_coord_t line_width;					         /* 边框的宽度 */
@@ -248,6 +256,7 @@ struct nxui_textrect_s {
 	uint8_t x_offset;
 	uint8_t y_offset;
 	nxgl_mxpixel_t bkgd_color;
+	bool no_bkgd;
 	nxgl_mxpixel_t line_color;
 	nxgl_coord_t line_width;
 	struct nxgl_rect_s rect; 
@@ -300,7 +309,7 @@ extern FAR NX_DRIVERTYPE *up_nxdrvinit(unsigned int devno);
 
 FAR void nxui_frame_init(void);
 FAR int nxui_draw_frame(int which_frame);
-
+inline int u2g(const char *inbuf,int inlen,char *outbuf,int outlen);
 /* Image interfaces */
 extern void nximage_blitrow(FAR nxgl_mxpixel_t *run, FAR const void **state, nxgl_coord_t image_width);
 #endif /* __APPS_EXAMPLES_NXUI_NXUI_H */
