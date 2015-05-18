@@ -207,11 +207,11 @@ errout:
 	return g_nxui.code;
 }
 
-static inline  int draw_rect(NXWINDOW hwnd, struct nxgl_rect_s *dest, nxgl_mxpixel_t line_color,
-		nxgl_mxpixel_t line_width, nxgl_mxpixel_t bkgd_color, bool no_bkgd)
+static inline int draw_rect(NXWINDOW hwnd, struct nxgl_rect_s *dest, nxgl_mxpixel_t line_color,
+		nxgl_coord_t line_width, nxgl_mxpixel_t bkgd_color, bool no_bkgd)
 {
-	int h_line_width = line_width;
-	int v_line_width = line_width;
+	uint16_t h_line_width = line_width;
+	uint16_t v_line_width = line_width;
 
 	int ret = 0;
 	struct nxgl_vector_s line;
@@ -227,19 +227,16 @@ static inline  int draw_rect(NXWINDOW hwnd, struct nxgl_rect_s *dest, nxgl_mxpix
 	line.pt2.x = dest->pt1.x + v_line_width / 2;
 	line.pt2.y = dest->pt2.y;
 	ret |= nx_drawline(hwnd, &line, line_width, color);
-	//nx_drawline(g_nxui.hbkgd, &line, dest->line_width, color);
 	line.pt1.x = dest->pt2.x;
 	line.pt1.y = dest->pt2.y - h_line_width / 2 + 1;
 	line.pt2.x = dest->pt1.x;
 	line.pt2.y = dest->pt2.y - h_line_width / 2 + 1;
 	ret |= nx_drawline(hwnd, &line, line_width, color);
-	//nx_drawline(g_nxui.hbkgd, &line, dest->line_width, color);
 	line.pt1.x = dest->pt2.x - v_line_width / 2 + 1;
 	line.pt1.y = dest->pt2.y;
 	line.pt2.x = dest->pt2.x - v_line_width / 2 + 1;
 	line.pt2.y = dest->pt1.y;
 	ret |= nx_drawline(hwnd, &line, line_width, color);
-	//nx_drawline(g_nxui.hbkgd, &line, dest->line_width, color);
 
 	if(!no_bkgd) {
 		color[0] = bkgd_color;
@@ -248,9 +245,10 @@ static inline  int draw_rect(NXWINDOW hwnd, struct nxgl_rect_s *dest, nxgl_mxpix
 			dest->pt1.y + line_width - 1,
 			dest->pt2.x - line_width + 1,
 			dest->pt2.y - line_width + 1
-		};/* 为了防止背景色把边框覆盖掉 */
+		};// 为了防止背景色把边框覆盖掉
 		ret |= nx_fill(hwnd, &rect, color);
 	}
+
 	return ret;
 }
 
@@ -627,7 +625,7 @@ void draw_image(NXWINDOW hwnd, struct nxgl_rect_s *rect, nxgl_coord_t image_widt
     }
 }
 
-static void draw_image_rect(struct nxui_imagerect_s *dest) {
+static inline void draw_image_rect(struct nxui_imagerect_s *dest) {
     draw_rect(g_nxui.hbkgd, &dest->rect, dest->line_color, dest->line_width, dest->bkgd_color, dest->no_bkgd);
 
 	struct nxgl_rect_s rect = {
@@ -907,7 +905,7 @@ static void frame_0_init(void) {
 }
 
 /**/
-static inline void frame_1_init(void) {
+static void frame_1_init(void) {
 	struct nxui_frame_s *frame = &g_frame[1];
 	struct nxui_textrect_s *curr_tr; /* current text rect */
 	struct nxui_imagerect_s *curr_ir; /* current image rect */
@@ -1116,42 +1114,33 @@ static inline void frame_1_init(void) {
 	}
 }
 
-void u2g_wrap(uint8_t *src, uint8_t *dest, int malloc_size) {
-    uint8_t *gbk_str = (uint8_t *)malloc(malloc_size);
-    u2g(src, strlen(src), gbk_str, malloc_size);
-	strcpy(dest, gbk_str);
-	free(gbk_str);
-}
 
 static uint8_t gbk_str1[32];
 static uint8_t gbk_str2[16];
 static uint8_t gbk_str3[16];
 static uint8_t gbk_str4[16];
-static inline void frame_2_init(void) {
+static void frame_2_init(void) {
 	struct nxui_frame_s *frame = &g_frame[2];
 	struct nxui_textrect_s *curr_tr; /* current text rect */
 	struct nxui_imagerect_s *curr_ir; /* current image rect */
-    char str1[] = "检查结果";
-	char str2[] = "病情诊断";
-	char str3[] = "用药查询";
-	char str4[] = "费用查询";
+	uint8_t str1[] = "检查结果";
+	uint8_t str2[] = "病情诊断";
+	uint8_t str3[] = "用药查询";
+	uint8_t str4[] = "费用查询";
 
-/*	uint8_t *gbk_str = (uint8_t *)malloc(32);
-    u2g(str2, strlen(str2), gbk_str, 32);
-	strcpy(gbk_str1, gbk_str);
-*/
-u2g_wrap(str1, gbk_str1, 16);
+	uint8_t tmp1[16];
+	uint8_t tmp2[16];
+	uint8_t tmp3[16];
+	uint8_t tmp4[16];
+	u2g(str1, strlen(str1), tmp1, 16);
+	u2g(str2, strlen(str2), tmp2, 16);
+	u2g(str3, strlen(str3), tmp3, 16);
+	u2g(str4, strlen(str4), tmp4, 16);
+	memcpy(gbk_str1,tmp1,8);
+	memcpy(gbk_str2,tmp2,8);
+	memcpy(gbk_str3,tmp3,8);
+	memcpy(gbk_str4,tmp4,8);
 
-
-    u2g_wrap(str2, gbk_str2, 16);
-    //u2g(str2, strlen(str2), gbk_str, 255);
-	//strcpy(gbk_str2, gbk_str);
-  /*  u2g(str3, strlen(str3), gbk_str, 32);
-	strcpy(gbk_str3, gbk_str);
-    u2g(str4, strlen(str4), gbk_str, 32);
-	strcpy(gbk_str4, gbk_str);
-	free(gbk_str);
-*/
 	if(frame->text_rect == NULL) {
 		frame->text_rect = (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
 
@@ -1232,7 +1221,357 @@ u2g_wrap(str1, gbk_str1, 16);
 		curr_tr->text_index = 0;
 		curr_tr->text = gbk_str4;
 	}
+}
 
+static uint8_t gbk_room[4];
+static uint8_t gbk_bed[4];
+static uint8_t gbk_info[8];
+
+// frame 3
+void frame_call_for_help_init(void) {
+	struct nxui_frame_s *frame = &g_frame[3];
+	struct nxui_textrect_s *curr_tr; /* current text rect */
+	struct nxui_imagerect_s *curr_ir; /* current image rect */
+	frame->text_rect = NULL;
+	frame->image_rect = NULL;
+
+
+
+	uint8_t str1[] = "房";
+	uint8_t str2[] = "床";
+	uint8_t str3[] = "待增援";
+
+	uint8_t tmp1[16];
+	uint8_t tmp2[16];
+	uint8_t tmp3[16];
+	u2g(str1, strlen(str1), tmp1, 16);
+	u2g(str2, strlen(str2), tmp2, 16);
+	u2g(str3, strlen(str3), tmp3, 16);
+	memcpy(gbk_room,tmp1,2);
+	memcpy(gbk_bed,tmp2,2);
+	memcpy(gbk_info,tmp3,6);
+
+	if(frame->text_rect == NULL) {
+		frame->text_rect = (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+
+		/* 背景 ***********************************************************************/
+		curr_tr = frame->text_rect;
+		//curr_tr->rect_type = NXUI_BED;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 290, 90, 470, 300);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN48X48;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 32;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		if(curr_tr->text != NULL)
+			free(curr_tr->text);
+		curr_tr->text = strdup(" ");
+
+		/* 房号 *******************************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		curr_tr->rect_type = NXUI_FRAME_3_ROOM_NO;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 15;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 347, 100, 395, 148);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_SERIF38X48;//FONTID_CN48X48;//NXFONT_DEFAULT;
+		curr_tr->font_color =0xff3300;//RGB24_YELLOWGREEN;
+		curr_tr->text = g_patient.name;
+		curr_tr->col_num = 8;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = g_bed_room.room_no;
+
+		/* 房 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_FRAME_3_ROOM;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 405, 100, 453, 148);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN48X48;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 4;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_room;
+
+		/* 床号 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		curr_tr->rect_type = NXUI_FRAME_3_BED_NO;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 15;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 347, 160, 395, 210);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_SERIF38X48;//FONTID_CN48X48;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 4;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = g_bed_room.bed_no;
+
+		/* 床 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_BED;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 405, 160, 453, 210);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN48X48;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 4;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_bed;
+
+		/* 待增援 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_BED;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 300, 220, 444, 270);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN48X48;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 32;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_info;
+
+	}
+
+}
+
+static uint8_t gbk_str5[10];
+static uint8_t gbk_str6[10];
+static uint8_t gbk_str7[5];
+
+static void frame_4_init(void) {
+	struct nxui_frame_s *frame = &g_frame[4];
+	struct nxui_textrect_s *curr_tr; /* current text rect */
+	struct nxui_imagerect_s *curr_ir; /* current image rect */
+	frame->text_rect = NULL;
+	frame->image_rect = NULL;
+
+	uint8_t str1[] = "责任医生";
+	uint8_t str2[] = "责任护士";
+	uint8_t str3[] = "姓名";
+
+	uint8_t tmp1[16];
+	uint8_t tmp2[16];
+	uint8_t tmp3[16];
+	u2g(str1, strlen(str1), tmp1, 16);
+	u2g(str2, strlen(str2), tmp2, 16);
+	u2g(str3, strlen(str3), tmp3, 16);
+	memcpy(gbk_str5,tmp1,8);
+	memcpy(gbk_str6,tmp2,8);
+	memcpy(gbk_str7,tmp3,4);
+	
+	if(frame->text_rect == NULL) {
+		frame->text_rect = (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+
+		/* "责任医生" *******************************************************************************/
+		curr_tr = frame->text_rect;
+		//curr_tr->rect_type = NXUI_PATIENT_NAME;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 5;
+		set_rect_pos(&curr_tr->rect, 140, 100, 270, 140);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN32X32;//NXFONT_DEFAULT;
+		curr_tr->font_color =0xff3300;//RGB24_YELLOWGREEN;
+		curr_tr->text = g_patient.name;
+		curr_tr->col_num = 16;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_str5;
+
+		/* "责任护士" ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_PATIENT_GENDER;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;
+		curr_tr->line_color = 0x8cc63f;//0xdf;
+		curr_tr->line_width = 5;
+		set_rect_pos(&curr_tr->rect, 530, 100, 660, 140);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_CN32X32;//XFONT_DEFAULT;
+		curr_tr->font_color =0xff3300; //RGB24_YELLOWGREEN;
+		curr_tr->col_num = 16;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_str6;
+
+		/* 医生1姓名 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_PATIENT_AGE;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//RGB24_YELLOWGREEN;//0xdf;
+		curr_tr->line_width = 5;
+		set_rect_pos(&curr_tr->rect, 40, 340, 200, 380);
+		curr_tr->next = NULL;
+		curr_tr->font_id = NXFONT_DEFAULT;
+		curr_tr->font_color = 0xff3300;//GB24_YELLOWGREEN;
+		curr_tr->col_num = 16;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_str7;
+
+		/* 医生2姓名 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_BED_NO;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//RGB24_YELLOWGREEN;//0xdf;
+		curr_tr->line_width = 5;
+		set_rect_pos(&curr_tr->rect, 210, 340, 370, 380);
+		curr_tr->next = NULL;
+		curr_tr->font_id = NXFONT_DEFAULT;
+		curr_tr->font_color = 0xff3300;//GB24_YELLOWGREEN;
+		curr_tr->col_num = 16;
+		curr_tr->row_num = 1;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->text = gbk_str7;
+
+		/* 护士1姓名 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_ADMISSION_TIME;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->no_bkgd = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//RGB24_YELLOWGREEN;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 430, 340, 590, 380);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_DEFAULT;
+		curr_tr->font_color = 0xff3300;//GB24_YELLOWGREEN;
+		curr_tr->font_height = 32;
+		curr_tr->col_num = 16;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->row_num = 3;
+		curr_tr->text = gbk_str7;
+
+		/* 护士2姓名 ***********************************************************************/
+		curr_tr->next =  (struct nxui_textrect_s *)malloc(sizeof(struct nxui_textrect_s));
+		curr_tr = curr_tr->next;
+		//curr_tr->rect_type = NXUI_HOSPITALIZED_NO;
+		curr_tr->x_offset = 0;
+		curr_tr->y_offset = 0;
+		curr_tr->no_bkgd = 0;
+		curr_tr->bkgd_color = CONFIG_EXAMPLES_NXUI_BGCOLOR;//RGB24_BROWN;
+		curr_tr->line_color = 0x8cc63f;//RGB24_YELLOWGREEN;//0xdf;
+		curr_tr->line_width = 0;
+		set_rect_pos(&curr_tr->rect, 600, 340, 760, 380);
+		curr_tr->next = NULL;
+		curr_tr->font_id = FONTID_DEFAULT;
+		curr_tr->font_color = 0xff3300;//GB24_YELLOWGREEN;
+		curr_tr->font_height = 32;
+		curr_tr->col_num = 16;
+		curr_tr->text_scroll_handle = NULL;
+		curr_tr->text_index = 0;
+		curr_tr->row_num = 3;
+		curr_tr->text = gbk_str7;;
+
+		/* 责任医1照片 ***********************************************************************/
+		frame->image_rect = (struct nxui_imagerect_s *)malloc(sizeof(struct nxui_imagerect_s));
+		curr_ir = frame->image_rect;
+		curr_ir->rect_type = NXUI_DOCTOR_PHOTO;
+		curr_ir->x_offset = 0;
+		curr_ir->y_offset = 0;
+		curr_ir->bkgd_color = RGB24_GRAY;
+		curr_ir->line_color = RGB24_YELLOWGREEN;
+		curr_ir->line_width = 0x02;
+		set_rect_pos(&curr_ir->rect, 40, 160, 
+				40 + curr_ir->line_width + 160 - 1 , 160 + curr_ir->line_width + 160 - 1);
+		curr_ir->next = NULL;
+
+		/* 责任医生2照片 ***********************************************************************/
+		curr_ir->next = (struct nxui_imagerect_s *)malloc(sizeof(struct nxui_imagerect_s));
+		curr_ir = curr_ir->next;
+		curr_ir->rect_type = NXUI_DOCTOR_PHOTO;
+		curr_ir->x_offset = 0;
+		curr_ir->y_offset = 0;
+		curr_ir->bkgd_color = RGB24_GRAY;
+		curr_ir->line_color = RGB24_YELLOWGREEN;
+		curr_ir->line_width = 0x02;
+		set_rect_pos(&curr_ir->rect, 210, 160, 
+				210 + curr_ir->line_width + 160 - 1 , 160 + curr_ir->line_width + 160 - 1);
+		curr_ir->next = NULL;
+
+		/* 责任护士2照片 ***********************************************************************/
+		curr_ir->next = (struct nxui_imagerect_s *)malloc(sizeof(struct nxui_imagerect_s));
+		curr_ir = curr_ir->next;
+		curr_ir->rect_type = NXUI_DOCTOR_PHOTO;
+		curr_ir->x_offset = 0;
+		curr_ir->y_offset = 0;
+		curr_ir->bkgd_color = RGB24_GRAY;
+		curr_ir->line_color = RGB24_YELLOWGREEN;
+		curr_ir->line_width = 0x02;
+		set_rect_pos(&curr_ir->rect, 430, 160, 
+				430 + curr_ir->line_width + 160 - 1 , 160 + curr_ir->line_width + 160 - 1);
+		curr_ir->next = NULL;
+		
+		/* 责任护士2照片 ***********************************************************************/
+		curr_ir->next = (struct nxui_imagerect_s *)malloc(sizeof(struct nxui_imagerect_s));
+		curr_ir = curr_ir->next;
+		curr_ir->rect_type = NXUI_DOCTOR_PHOTO;
+		curr_ir->x_offset = 0;
+		curr_ir->y_offset = 0;
+		curr_ir->bkgd_color = RGB24_GRAY;
+		curr_ir->line_color = RGB24_YELLOWGREEN;
+		curr_ir->line_width = 0x02;
+		set_rect_pos(&curr_ir->rect, 600, 160, 
+				600 + curr_ir->line_width + 160 - 1 , 160 + curr_ir->line_width + 160 - 1);
+		curr_ir->next = NULL;
+	}
 }
 
 void nxui_frame_init(void) {
@@ -1241,20 +1580,21 @@ void nxui_frame_init(void) {
 	unsigned char diet[] = "清淡";
 	unsigned char drug[] = "阿陌西林";
 
-	char *gbk_str = (char *)malloc(16);
+	uint8_t gbk_str[16];
     u2g(name,strlen(name),gbk_str,16);
-	strcpy(g_patient.name, gbk_str);
+	strncpy(g_patient.name, gbk_str, strlen(name) / 3 * 2);
 
     u2g(position,strlen(position),gbk_str,16);
-	strcpy(g_patient.position, gbk_str);
+	strncpy(g_patient.position, gbk_str, strlen(position) / 3 * 2);
 
     u2g(diet,strlen(diet),gbk_str,16);
-	strcpy(g_patient.diet, gbk_str);
+	strncpy(g_patient.diet, gbk_str, strlen(diet) / 3 * 2);
 
     u2g(drug,strlen(drug),gbk_str,16);
-	strcpy(g_patient.drug_allergy, gbk_str);
+	strncpy(g_patient.drug_allergy, gbk_str, strlen(drug) / 3 * 2);
 
-
+	strcpy(g_bed_room.room_no, "10");
+	strcpy(g_bed_room.bed_no, "03");
 	strcpy(g_patient.special_note, "hello world!");
 	g_patient.gender = NXUI_GENDER_MALE;
 	g_patient.age = 38;
@@ -1266,6 +1606,8 @@ void nxui_frame_init(void) {
 //	set_bkgd_image();
 	frame_1_init();
 	frame_2_init();
+	frame_call_for_help_init();
+	frame_4_init();
 }
 
 int nxui_draw_frame(int which_frame) {
@@ -1281,5 +1623,4 @@ int nxui_draw_frame(int which_frame) {
 	for(image_rect = g_current->image_rect; image_rect; image_rect = image_rect->next) {
 		draw_image_rect(image_rect);
 	}
-	return ret;
 }

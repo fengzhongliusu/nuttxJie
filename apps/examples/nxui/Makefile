@@ -40,7 +40,7 @@ include $(APPDIR)/Make.defs
 # NuttX NX Graphics Example.
 
 ASRCS =
-CSRCS = nxui_frame.c nxui_bitmap.c my_bitmap7.c nxui_font.c
+CSRCS = nxui_frame.c nxui_bitmap.c my_bitmap.c nxui_font.c
 MAINSRC = nxui_main.c
 
 AOBJS = $(ASRCS:.S=$(OBJEXT))

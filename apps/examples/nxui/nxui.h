@@ -217,7 +217,7 @@ struct nxui_doctor_s {
 /* Frame display *************************************************************/
 
 enum rect_type_e {
-	NXUI_PATIENT_NAME,
+	NXUI_PATIENT_NAME = 1,
 	NXUI_PATIENT_GENDER,
 	NXUI_PATIENT_AGE,
 	NXUI_DOCTOR_PHOTO,
@@ -233,7 +233,9 @@ enum rect_type_e {
 	NXUI_RESULT_QUERY,
 	NXUI_DIAGNOSIS_QUERY,
 	NXUI_DRUG_QUERY,
-	NXUI_COST_QUERY
+	NXUI_COST_QUERY,
+	NXUI_FRAME_3_ROOM_NO,
+	NXUI_FRAME_3_BED_NO
 };
 
 /* 用于显示图像 */
@@ -282,6 +284,12 @@ struct nxui_rgb_s {
 	uint8_t g;
 	uint8_t b;
 };
+
+struct nxui_bed_room_s {
+	uint8_t room_no[4 + 1];
+	uint8_t bed_no[4 + 1];
+};
+
 /****************************************************************************
  * Public Variables
  ****************************************************************************/
@@ -294,6 +302,7 @@ extern const struct nxui_rgb_s  palette[];
 /* NXHELLO state data */
 
 extern struct nxui_data_s g_nxui;
+extern struct nxui_bed_room_s g_bed_room;
 
 /* NX callback vtables */
 
